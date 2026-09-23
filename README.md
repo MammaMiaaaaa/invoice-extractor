@@ -15,6 +15,14 @@ WhatsApp ──► Meta Cloud API ──► POST /whatsapp (Express)
               (1 row/invoice) (live, auto-fill)  with summary + warnings
 ```
 
+## Demo
+
+| 1. Send the PDF on WhatsApp | 2. The row lands in Google Sheets |
+|---|---|
+| <img src="docs/whatsapp.png" width="300" alt="PDF invoice sent to the WhatsApp business number"> | <img src="docs/sheet.png" alt="Google Sheet with the extracted invoice fields, one row per invoice"> |
+
+Row 4 came in over WhatsApp. Rows 2–3 were uploaded through the web form.
+
 Extracted fields: Fecha de Emisión, Tipo de Documento, Serie, Número, RUC, Proveedor, País, Ciudad,
 Importe Total, Tasa IGV (18% / 10.5% / 0), IGV, Otros Servicios, Moneda.
 
