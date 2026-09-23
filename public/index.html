@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detalle Documento de Sustento</title>
+<style>
+  :root {
+    --bg: #5b6670; --dialog: #fff; --text: #1d2d3e; --label: #556b82;
+    --field: #eff1f2; --field-line: #556b82; --accent: #d0021b; --hl: #fff27a; --hl-soft: #fffbd6;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+    font: 14px/1.4 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; padding: 24px 16px; }
+  .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
+
+  .drop { background: #fff; border: 2px dashed #9aa7b4; border-radius: 12px; padding: 16px;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .drop.over { border-color: var(--accent); background: #fff5f6; }
+  .drop strong { flex: 1 1 260px; }
+  .status { font-size: 13px; color: var(--label); flex-basis: 100%; }
+  .status.err { color: var(--accent); }
+
+  .dialog { background: var(--dialog); border-radius: 12px; box-shadow: 0 10px 30px rgb(0 0 0 / .35); overflow: hidden; }
+  .dialog h1 { margin: 0; padding: 14px 20px; font-size: 18px; border-bottom: 1px solid #d9d9d9; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; padding: 20px 28px; }
+  .row { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: start; margin-bottom: 18px; }
+  .row label { text-align: right; color: var(--label); padding-top: 6px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  input { width: 100%; font: inherit; color: var(--text); background: var(--field); border: 0;
+    border-bottom: 1px dashed var(--field-line); border-radius: 4px 4px 0 0; padding: 7px 10px; min-height: 34px; }
+  input:focus { outline: 2px solid #0064d9; outline-offset: 1px; }
+  input.auto { background: var(--hl-soft); }
+  input.flash { animation: flash 1.6s ease-out; }
+  @keyframes flash { from { background: var(--hl); } to { background: var(--hl-soft); } }
+
+  .warnings { margin: 0 28px 16px; padding: 10px 14px; border-radius: 8px; background: #fff4e5; color: #8a4b00; }
+  .warnings:empty { display: none; }
+  footer { display: flex; justify-content: space-between; gap: 8px; align-items: center; flex-wrap: wrap;
+    padding: 12px 20px; border-top: 1px solid #d9d9d9; background: #fafafa; }
+  .legend { font-size: 12px; color: var(--label); }
+  .legend i { display: inline-block; width: 12px; height: 12px; background: var(--hl); vertical-align: -1px; border-radius: 2px; }
+  .btn { font: inherit; font-weight: 600; border-radius: 8px; padding: 6px 12px; cursor: pointer; text-decoration: none; }
+  .btn.ghost { color: var(--accent); border: 1px solid var(--accent); background: #fff; }
+  .btn.ghost[aria-disabled="true"] { opacity: .4; pointer-events: none; }
+  .btn.soft { color: var(--accent); border: 0; background: #fde4e8; }
+
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; padding: 16px; }
+    .row { grid-template-columns: 1fr; gap: 4px; }
+    .row label { text-align: left; padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="drop" id="drop">
+    <strong>Envía una factura PDF por WhatsApp, o suéltala aquí para probar sin WhatsApp.</strong>
+    <label class="btn ghost" for="file">Subir PDF</label>
+    <input type="file" id="file" accept="application/pdf" hidden>
+    <div class="status" id="status" role="status">Esperando facturas…</div>
+  </section>
+
+  <form class="dialog" id="form" onsubmit="return false">
+    <h1>Detalle Documento de Sustento</h1>
+    <div class="grid">
+      <div>
+        <div class="row"><label for="tipoViatico">Tipo de Viático:</label><input id="tipoViatico"></div>
+        <div class="row"><label for="subRubro">Sub Rubro:</label><input id="subRubro"></div>
+        <div class="row"><label for="fechaEmision">Fecha de Emisión:</label><input id="fechaEmision" data-auto></div>
+        <div class="row"><label for="tipoDocumento">Tipo de Documento:</label><input id="tipoDocumento" data-auto></div>
+        <div class="row"><label for="serie">N° Documento:</label>
+          <div class="pair"><input id="serie" data-auto aria-label="Serie"><input id="numero" data-auto aria-label="Número"></div></div>
+        <div class="row"><label for="ruc">RUC:</label><input id="ruc" data-auto></div>
+        <div class="row"><label for="proveedor">Proveedor:</label><input id="proveedor" data-auto></div>
+        <div class="row"><label for="pais">País:</label><input id="pais" data-auto></div>
+        <div class="row"><label for="ciudad">Ciudad:</label><input id="ciudad" data-auto></div>
+      </div>
+      <div>
+        <div class="row"><label for="importeTotal">Importe Total:</label><input id="importeTotal" data-auto></div>
+        <div class="row"><label for="afectoIgv">Afecto IGV:</label><input id="afectoIgv" data-auto></div>
+        <div class="row"><label for="igv">IGV:</label><input id="igv" data-auto></div>
+        <div class="row"><label for="otrosServicios">Otros Servicios:</label><input id="otrosServicios" data-auto></div>
+        <div class="row"><label for="moneda">Moneda:</label><input id="moneda" data-auto></div>
+        <div class="row"><label for="justificacion">Justificación:</label><input id="justificacion"></div>
+        <div class="row"><label for="ordenInt">Orden Int.:</label><input id="ordenInt"></div>
+        <div class="row"><label for="contabilizacion">Contabilización:</label><input id="contabilizacion"></div>
+      </div>
+    </div>
+    <div class="warnings" id="warnings"></div>
+    <footer>
+      <span class="legend"><i></i> Extraído automáticamente de la factura</span>
+      <span>
+        <a class="btn ghost" id="download" aria-disabled="true" target="_blank">⤓ Descargar adjunto</a>
+        <button class="btn soft" type="reset" id="cancel">Cancelar</button>
+      </span>
+    </footer>
+  </form>
+</div>
+
+<script>
+const POLL_MS = 3000;
+const MONEDA = { PEN: 'Soles', USD: 'Dólares', EUR: 'Euros' };
+const $ = (id) => document.getElementById(id);
+let shownId = null;
+
+const money = (n) => Number(n).toFixed(2);
+const toFormValues = (r) => ({
+  fechaEmision: r.fechaEmision, tipoDocumento: r.tipoDocumento, serie: r.serie, numero: r.numero,
+  ruc: r.ruc, proveedor: r.proveedor, pais: r.pais, ciudad: r.ciudad,
+  importeTotal: money(r.importeTotal), afectoIgv: r.tasaIgv ? `Tasa ${r.tasaIgv}%` : 'No afecto',
+  igv: money(r.igv), otrosServicios: money(r.otrosServicios), moneda: MONEDA[r.moneda] ?? r.moneda,
+});
+
+function fill(record) {
+  shownId = record.id;
+  for (const [id, value] of Object.entries(toFormValues(record))) {
+    const el = $(id);
+    el.value = value;
+    el.classList.add('auto');
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  }
+  $('warnings').textContent = record.warnings.length ? '⚠️ Revisar: ' + record.warnings.join(' · ') : '';
+  $('download').href = `/api/records/${record.id}/pdf`;
+  $('download').setAttribute('aria-disabled', 'false');
+  setStatus(`Factura #${record.id} recibida vía ${record.source} · Google Sheet: ${record.sheet}`);
+}
+
+function setStatus(text, isError = false) {
+  $('status').textContent = text;
+  $('status').classList.toggle('err', isError);
+}
+
+async function poll() {
+  try {
+    const record = await (await fetch('/api/latest')).json();
+    if (record && record.id !== shownId) fill(record);
+  } catch { setStatus('Servidor no disponible, reintentando…', true); }
+}
+
+async function upload(file) {
+  if (!file || file.type !== 'application/pdf') return setStatus('Solo se aceptan archivos PDF.', true);
+  setStatus(`Procesando ${file.name} con IA…`);
+  const body = new FormData();
+  body.append('invoice', file);
+  try {
+    const res = await fetch('/api/upload', { method: 'POST', body });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    fill(data);
+  } catch (err) { setStatus(`Error: ${err.message}`, true); }
+}
+
+$('file').addEventListener('change', (e) => upload(e.target.files[0]));
+$('cancel').addEventListener('click', () => {
+  document.querySelectorAll('input.auto').forEach((el) => el.classList.remove('auto', 'flash'));
+  $('warnings').textContent = '';
+  $('download').setAttribute('aria-disabled', 'true');
+});
+const drop = $('drop');
+['dragenter', 'dragover'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', (e) => upload(e.dataTransfer.files[0]));
+
+poll();
+setInterval(poll, POLL_MS);
+</script>
+</body>
+</html>

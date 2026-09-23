@@ -1,0 +1,24 @@
+{
+  "name": "invoice-extractor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --env-file-if-exists=.env --test",
+    "start": "node --env-file-if-exists=.env server.js",
+    "samples": "node samples/make-invoice.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@google/genai": "^2.24.0",
+    "express": "^5.2.1",
+    "googleapis": "^181.0.0",
+    "multer": "^2.4.0"
+  },
+  "devDependencies": {
+    "pdfkit": "^0.20.2"
+  }
+}
