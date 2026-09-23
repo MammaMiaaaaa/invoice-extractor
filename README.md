@@ -23,6 +23,12 @@ WhatsApp ──► Meta Cloud API ──► POST /whatsapp (Express)
 
 Row 4 came in over WhatsApp. Rows 2–3 were uploaded through the web form.
 
+**3. The web form fills itself in.** Extracted fields are highlighted in yellow, and the fields the invoice doesn't cover stay empty for a person to complete.
+
+<img src="docs/web-form.gif" alt="Uploading a PDF invoice: the Detalle Documento de Sustento form fills in the date, series, number, RUC, supplier, amounts and IGV">
+
+The GIF shows the PDF upload fallback. Invoices sent over WhatsApp fill the form the same way.
+
 Extracted fields: Fecha de Emisión, Tipo de Documento, Serie, Número, RUC, Proveedor, País, Ciudad,
 Importe Total, Tasa IGV (18% / 10.5% / 0), IGV, Otros Servicios, Moneda.
 
